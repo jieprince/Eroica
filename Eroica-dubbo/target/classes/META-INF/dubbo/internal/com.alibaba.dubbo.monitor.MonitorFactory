@@ -1,0 +1,2 @@
+dubbo=com.alibaba.dubbo.monitor.dubbo.DubboMonitorFactroy
+logstat=com.alibaba.dubbo.monitor.logstat.LogstatMonitorFactroy
