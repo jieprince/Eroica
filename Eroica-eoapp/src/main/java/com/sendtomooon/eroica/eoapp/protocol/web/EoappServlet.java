@@ -12,21 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 import com.pingan.pafa.pizza.Pizza;
 import com.sendtomooon.eroica.eoapp.EoApp;
 
-public class EoappServlet implements javax.servlet.Servlet{
-	
-	private EoApp papp;
+public class EoappServlet implements javax.servlet.Servlet {
+
+	private EoApp eoapp;
 
 	@Override
 	public void destroy() {
-		if(papp!=null)
-			papp.shutdown();
+		if (eoapp != null)
+			eoapp.shutdown();
 	}
 
 	@Override
 	public ServletConfig getServletConfig() {
 		return null;
 	}
-	
 
 	@Override
 	public String getServletInfo() {
@@ -35,41 +34,31 @@ public class EoappServlet implements javax.servlet.Servlet{
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
-		String param=(config==null?null:config.getInitParameter("PizzaConfigFile"));
-		String file=null;
-		if(param!=null && (param=param.trim()).length()>0){
-			file=param;
+		String param = (config == null ? null : config.getInitParameter("PizzaConfigFile"));
+		String file = null;
+		if (param != null && (param = param.trim()).length() > 0) {
+			file = param;
 		}
-		try{
-			if(file!=null){
-				System.out.println("PappServletFilter：\n\t"+Pizza.KEY_CONFIG_FILE+"="+file);
+		try {
+			if (file != null) {
+				System.out.println("EoappServletFilter：\n\t" + Pizza.KEY_CONFIG_FILE + "=" + file);
 				System.setProperty(Pizza.KEY_CONFIG_FILE, file);
 			}
-			/*try {
-				URL url=config.getServletContext().getResource("/WEB-INF/papp-lib");
-				File libDir=new File(url.toURI());
-				if(libDir.exists()){
-					System.setProperty(PAppConstants.KEY_LIB_DIR, libDir.getAbsolutePath());
-				}
-			} catch (Exception e) {
-				throw new ServletException(e.getMessage(),e);
-			}*/
-			papp=EoApp.getInstance();
-			papp.setServletContext(config.getServletContext());
-			papp.startup();
-		}finally{
-			if(file!=null){
+			eoapp = EoApp.getInstance();
+			eoapp.setServletContext(config.getServletContext());
+			eoapp.startup();
+		} finally {
+			if (file != null) {
 				System.clearProperty(Pizza.KEY_CONFIG_FILE);
 			}
 		}
 	}
 
 	@Override
-	public void service(ServletRequest request, ServletResponse resp)
-			throws ServletException, IOException {
-		HttpServletRequest processedRequest = (HttpServletRequest)request;
-		HttpServletResponse  response=(HttpServletResponse)resp;
-		papp.handleWebRequest(processedRequest, response);
+	public void service(ServletRequest request, ServletResponse resp) throws ServletException, IOException {
+		HttpServletRequest processedRequest = (HttpServletRequest) request;
+		HttpServletResponse response = (HttpServletResponse) resp;
+		eoapp.handleWebRequest(processedRequest, response);
 	}
 
 }
