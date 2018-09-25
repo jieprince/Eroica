@@ -1,6 +1,6 @@
 package com.sendtomooon.eroica.eoapp;
 
-import com.pingan.pafa.pizza.Pizza;
+import com.sendtomoon.eroica.pizza.Pizza;
 
 /**
  * 引导程序之一，启动组件之一
