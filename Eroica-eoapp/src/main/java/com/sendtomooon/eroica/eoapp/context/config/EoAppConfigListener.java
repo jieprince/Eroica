@@ -10,8 +10,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import com.pingan.pafa.pizza.classloader.PizzaURL;
-import com.pingan.pafa.pizza.spring.PizzaResourceListener;
+import com.sendtomoon.eroica.pizza.classloader.PizzaURL;
+import com.sendtomoon.eroica.pizza.spring.PizzaResourceListener;
 import com.sendtomooon.eroica.eoapp.context.event.EoAppConfigChangedEvent;
 
 public class EoAppConfigListener implements PizzaResourceListener, ApplicationContextAware {
