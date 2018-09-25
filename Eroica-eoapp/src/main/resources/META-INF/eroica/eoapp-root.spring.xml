@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		 http://www.springframework.org/schema/context   
+     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+  
+  	<bean id="_eoapp_properties"
+		class="com.sendtomooon.eroica.eoapp.context.config.EoAppConfigPropertiesFactory"
+		lazy-init="false">
+	</bean> 
+	
+	<bean id="_eoapp_config_listener"
+		class="com.sendtomooon.eroica.eoapp.context.config.EoAppConfigListener">
+		<property name="configProperties" ref="_eoapp_properties"/>
+	</bean> 
+	
+	<bean id="_eoapp_pizza_listener_register"
+		class="com.pingan.pafa.pizza.spring.PizzaResourceListenerRegisterBean">
+	</bean>
+	
+	<bean id="_eoapp_property_placeholder_configurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="properties" ref="_eoapp_properties"/>
+	</bean>
+	
+	<bean id="_eoapp_pwd_provider_config_refresh"
+		class="com.sendtomoon.eroica.eoapp.context.support.PasswordProviderConfigRefreshBean" 
+		lazy-init="false">
+		<property name="configProperties" ref="_eoapp_properties"/>
+	</bean>
+	
+	<bean id="_eoapp_dubbo_initializer" class="com.sendtomoon.eroica.eoapp.protocol.dubbo.DubboInitializer"
+	 	lazy-init="false">
+	 	<property name="appName" value="${eoapp.name}"/>
+		<property name="configureResource" value="pizza:/eoapp/${eoapp.name}.dubbo.properties"/>
+		<property name="configureProperties" ref="_eoapp_properties"/>
+	 </bean>
+	
+	<bean id="_eoapp_pola" class="com.pingan.pafa.pola.PolaBean" init-method="init" destroy-method="destroy" >
+		<property name="config" value="${pola.config:}"/>
+		<property name="workDir" value="${pola.work.dir:}"/>
+		<property name="domainId" value="${pizza.domain.id:}"/>
+		<property name="forceUpdate" value="${pola.force.update:true}" />
+	</bean>
+	
+	
+	<bean id="_eoapp_classloader_factory"
+		class="com.sendtomoon.eroica.eoapp.context.lib.EoAppClassLoaderFactoryBean">
+		<property name="eoappName" value="${eoapp.name}"/>
+		<property name="libList" value="${eoapp.lib.list}"/>
+		<property name="libDirectory" value="${eoapp.lib.dir}"/>
+		<property name="parentPriority" value="${eoapp.classloader.parent.priority}"/>
+		<property name="pola" ref="_eoapp_pola"/>
+	</bean> 
+	
+	<bean id="_eoapp_spring_context_factory"
+		class="com.sendtomoon.eroica.eoapp.context.EoAppSpringContextFactoryBean" 
+		lazy-init="false">
+		<property name="eoappName" value="${eoapp.name}"/>
+		<property name="webDispatcherBeanId" value="${eoapp.web.dispatcher}"/>
+		<property name="configProperties" ref="_eoapp_properties"/>
+	</bean>
+	
+	<bean id="_eoapp_lifecycle"
+		class="com.sendtomoon.eroica.eoapp.context.EoAppLifecycleBean" 
+		lazy-init="false">
+		<property name="eoappName" value="${eoapp.name}"></property>
+		<property name="sarList" value="${eoapp.sar.list}" ></property>
+		<property name="classLoaderFactory" ref="_eoapp_classloader_factory"></property>
+		<property name="springContextFactory" ref="_eoapp_spring_context_factory"></property>
+		<property name="configProperties" ref="_eoapp_properties"/>
+		<property name="pola" ref="_eoapp_pola"></property>
+	</bean>
+	
+	 
+	
+</beans>

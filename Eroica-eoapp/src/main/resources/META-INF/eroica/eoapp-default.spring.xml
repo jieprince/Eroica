@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		 http://www.springframework.org/schema/context   
+     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+   
+   <context:annotation-config />
+   
+    <bean id="_eoapp_property_configurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="properties" ref="_eoapp_properties"/>
+	</bean> 
+	
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<array>
+				<value>classpath:META-INF/${eoapp.name}.message</value>
+				<value>classpath:META-INF/eroica/message-default</value>
+			</array>
+		</property>
+		<property name="defaultEncoding" value="${eoapp.def.charset:utf8}"/>
+	</bean> 
+	
+	<bean id="_eoapp_esa_def_ex_resolver"
+		class="com.sendtomoon.eroica.eoapp.esa.exception.DefESAExceptionResolver">
+		<property name="messageSource" ref="messageSource"/>
+	</bean> 
+	
+	<bean id="_eoapp_dubbo" class="com.sendtomoon.eroica.eoapp.protocol.dubbo.DubboProtocolBean"
+	 	lazy-init="false">
+	</bean>
+	
+	<bean id="_eoapp_pizza_listener_register"
+		class="com.pingan.pafa.pizza.spring.PizzaResourceListenerRegisterBean">
+	</bean>
+	
+</beans>

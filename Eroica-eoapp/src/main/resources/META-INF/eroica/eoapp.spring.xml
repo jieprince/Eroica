@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		 http://www.springframework.org/schema/context   
+     http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+   
+  
+	<bean id="_eoapp_esa_manager" class="com.sendtomoon.eroica.eoapp.context.support.ESAManagerBean"/>
+	
+	<bean id="_eoapp_esa_register" class="com.sendtomoon.eroica.eoapp.context.support.ESARegisterBean">
+		<property name="esaManager" ref="_eoapp_esa_manager"></property>
+	</bean>
+	
+	
+	<bean id="_eoapp_sar_factory" class="com.sendtomoon.eroica.eoapp.sar.SARContextFactoryBean">
+		<property name="eoppProperties" ref="_eopp_properties"/>
+		<property name="pola" ref="_eoapp_pola"></property>
+	</bean>
+	
+	<bean id="_eoapp_sar_manager" class="com.sendtomoon.eroica.eoapp.context.support.SARManagerBean" lazy-init="false">
+		<property name="sarContextFactory" ref="_eoapp_sar_factory"></property>
+	</bean>
+	
+</beans>
