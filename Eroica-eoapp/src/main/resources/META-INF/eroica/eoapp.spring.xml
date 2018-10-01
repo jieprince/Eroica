@@ -16,7 +16,7 @@
 	
 	
 	<bean id="_eoapp_sar_factory" class="com.sendtomoon.eroica.eoapp.sar.SARContextFactoryBean">
-		<property name="eoppProperties" ref="_eopp_properties"/>
+		<property name="eoappProperties" ref="_eoapp_properties"/>
 		<property name="pola" ref="_eoapp_pola"></property>
 	</bean>
 	
