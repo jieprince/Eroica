@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+ 
+ 	  <bean id="_eoapp_web_def_ex_resolver" class="com.sendtomoon.eroica.eoapp.web.exception.ResponseCodeExceptionResolver">
+			<property name="messageSource" ref="messageSource"/>
+	  </bean>
+	  <bean id="_eoapp_web_def_dispatcher" class="com.sendtomoon.eroica.eoapp.web.DefEoAppWebDispatcher">
+	  		<property name="sarManager" ref="_eoapp_sar_manager"></property>
+	  </bean>
+ 
+	  <bean id="_eoapp_web_filter"
+					class="com.sendtomoon.eroica.eoapp.web.filter.impl.CommonWebFilter">
+			<property name="defaultCharset" value="${eoapp.web.charset:UTF-8}"/>
+			<property name="preventCaching" value="${eoapp.web.preventCaching:true}"/>
+			<property name="pattern" value="${eoapp.web.filter.pattern:/**}"/>
+			<property name="logEnable" value="${eoapp.web.log.enable:true}"></property>
+	  </bean>
+</beans>

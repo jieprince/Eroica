@@ -5,7 +5,7 @@
 		 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
 	<bean id="_sar_web_handler_adapter"
-		class="com.sendtomooon.eroica.eoapp.web.EroicaAnnotationMethodHandlerAdapter">
+		class="com.sendtomoon.eroica.eoapp.web.EroicaAnnotationMethodHandlerAdapter">
 		<property name="webBindingInitializer">
 			<ref bean="_sar_web_binding_initializer" />
 		</property>
@@ -26,30 +26,30 @@
 		class="org.springframework.format.support.FormattingConversionServiceFactoryBean" />
 
 	<bean id="_sar_web_handler_mapping"
-		class="com.sendtomooon.eroica.eoapp.web.Pafa5AnnotationHandlerMapping">
+		class="com.sendtomoon.eroica.eoapp.web.EroicaAnnotationHandlerMapping">
 		<property name="autoLoadInterceptors"
 			value="${sar.web.auto.load.interceptors:true}"></property>
 	</bean>
 
 	<bean id="_sar_web_json_model"
-		class="com.sendtomooon.eroica.eoapp.web.support.FastJsonModelAndViewResolver">
+		class="com.sendtomoon.eroica.eoapp.web.support.FastJsonModelAndViewResolver">
 		<property name="enbale"
 			value="${sar.web.resp.json.enable:true}" />
 	</bean>
 
 	<bean id="_sar_web_def_ex_resolver"
-		class="com.sendtomooon.eroica.eoapp.web.exception.ResponseCodeExceptionResolver">
+		class="com.sendtomoon.eroica.eoapp.web.exception.ResponseCodeExceptionResolver">
 		<property name="messageSource" ref="messageSource" />
 	</bean>
 
 	<bean id="_sar_web_json_to_form_filter"
-		class="com.sendtomooon.eroica.eoapp.web.filter.impl.PostJsonToFormFilter">
+		class="com.sendtomoon.eroica.eoapp.web.filter.impl.PostJsonToFormFilter">
 		<property name="enable"
 			value="${sar.web.json2form.enable:true}" />
 	</bean>
 
 	<bean id="_sar_web_def_dispatcher"
-		class="com.sendtomooon.eroica.eoapp.web.DefWebDispatcher">
+		class="com.sendtomoon.eroica.eoapp.web.DefWebDispatcher">
 		<property name="handlerAdapters">
 			<list>
 				<ref bean="_sar_web_handler_adapter" />
