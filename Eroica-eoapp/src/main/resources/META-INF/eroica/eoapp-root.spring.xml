@@ -8,17 +8,17 @@
      http://www.springframework.org/schema/context/spring-context-3.0.xsd">
   
   	<bean id="_eoapp_properties"
-		class="com.sendtomooon.eroica.eoapp.context.config.EoAppConfigPropertiesFactory"
+		class="com.sendtomoon.eroica.eoapp.context.config.EoAppConfigPropertiesFactory"
 		lazy-init="false">
 	</bean> 
 	
 	<bean id="_eoapp_config_listener"
-		class="com.sendtomooon.eroica.eoapp.context.config.EoAppConfigListener">
+		class="com.sendtomoon.eroica.eoapp.context.config.EoAppConfigListener">
 		<property name="configProperties" ref="_eoapp_properties"/>
 	</bean> 
 	
 	<bean id="_eoapp_pizza_listener_register"
-		class="com.pingan.pafa.pizza.spring.PizzaResourceListenerRegisterBean">
+		class="com.sendtomoon.eroica.pizza.spring.PizzaResourceListenerRegisterBean">
 	</bean>
 	
 	<bean id="_eoapp_property_placeholder_configurer"

@@ -35,7 +35,7 @@
 	</bean>
 	
 	<bean id="_eoapp_pizza_listener_register"
-		class="com.pingan.pafa.pizza.spring.PizzaResourceListenerRegisterBean">
+		class="com.sendtomoon.eroica.pizza.spring.PizzaResourceListenerRegisterBean">
 	</bean>
 	
 </beans>
