@@ -1,4 +1,4 @@
-package com.sendtomooon.eroica.eoapp.context.event;
+package com.sendtomoon.eroica.eoapp.context.event;
 
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ConfigurableApplicationContext;

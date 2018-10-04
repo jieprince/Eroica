@@ -1,4 +1,4 @@
-package com.sendtomooon.eroica.eoapp;
+package com.sendtomoon.eroica.eoapp;
 
 public class EoAppException extends RuntimeException {
 

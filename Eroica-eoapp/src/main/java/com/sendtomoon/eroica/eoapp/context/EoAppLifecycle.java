@@ -1,10 +1,10 @@
-package com.sendtomooon.eroica.eoapp.context;
+package com.sendtomoon.eroica.eoapp.context;
 
 import javax.servlet.ServletContext;
 
 import org.springframework.context.Lifecycle;
 
-import com.sendtomooon.eroica.eoapp.context.config.EoAppConfigProperties;
+import com.sendtomoon.eroica.eoapp.context.config.EoAppConfigProperties;
 
 public interface EoAppLifecycle extends Lifecycle {
 
