@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="_sar_dubbo_eroica_ac"
+		class="com.sendtomoon.eroica.appclient.dubbo.ApplicationControllerDubboClient">
+		<property name="consumerName" value="${sar.name}" />
+	</bean>
+
+	<bean id="_sar_esa_client_factory"
+		class="com.sendtomoon.eroica.eoapp.esa.client.ActionClientFactoryBean">
+		<property name="eroicaAc"
+			value="${sar.esa.eroica.ac:_sar_dubbo_eroica_ac}"></property>
+	</bean>
+
+	<bean id="_sar_esa_web_client"
+		class="com.sendtomoon.eroica.eoapp.esa.client.ESAWebClientBean">
+		<property name="consumerName" value="${sar.name}" />
+	</bean>
+
+	<bean id="_sar_esa_bpp"
+		class="com.sendtomoon.eroica.eoapp.esa.client.ESABeanPostProcessor">
+		<property name="defaultEroicaAc"
+			value="${sar.esa.eroica.ac:_sar_dubbo_eroica_ac}" />
+	</bean>
+</beans>
