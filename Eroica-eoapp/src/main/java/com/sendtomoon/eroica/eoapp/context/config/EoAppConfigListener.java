@@ -1,4 +1,4 @@
-package com.sendtomooon.eroica.eoapp.context.config;
+package com.sendtomoon.eroica.eoapp.context.config;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +12,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import com.sendtomoon.eroica.pizza.classloader.PizzaURL;
 import com.sendtomoon.eroica.pizza.spring.PizzaResourceListener;
-import com.sendtomooon.eroica.eoapp.context.event.EoAppConfigChangedEvent;
+import com.sendtomoon.eroica.eoapp.context.event.EoAppConfigChangedEvent;
 
 public class EoAppConfigListener implements PizzaResourceListener, ApplicationContextAware {
 
