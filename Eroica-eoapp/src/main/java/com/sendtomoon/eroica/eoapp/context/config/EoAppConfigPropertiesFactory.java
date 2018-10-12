@@ -1,4 +1,4 @@
-package com.sendtomooon.eroica.eoapp.context.config;
+package com.sendtomoon.eroica.eoapp.context.config;
 
 import java.io.InputStream;
 import java.util.Set;
@@ -15,8 +15,8 @@ import org.springframework.core.io.Resource;
 import org.springframework.util.PropertyPlaceholderHelper;
 import org.springframework.util.PropertyPlaceholderHelper.PlaceholderResolver;
 
-import com.pingan.pafa.pizza.PizzaConstants;
-import com.pingan.pafa.pizza.classloader.PizzaURL;
+import com.sendtomoon.eroica.pizza.PizzaConstants;
+import com.sendtomoon.eroica.pizza.classloader.PizzaURL;
 
 public class EoAppConfigPropertiesFactory  implements ApplicationContextAware
 	,InitializingBean,FactoryBean<EoAppConfigProperties>{
@@ -51,7 +51,7 @@ public class EoAppConfigPropertiesFactory  implements ApplicationContextAware
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		Resource[] resources=applicationContext.getResources(CONGIGLOCATION_NAME);
-		String appName=com.pingan.pafa.pizza.Pizza.getAppName();
+		String appName=com.sendtomoon.eroica.pizza.Pizza.getAppName();
 		PizzaURL pizzaURL=PizzaURL.valueOf(PizzaConstants.GROUP_EOAPP+"/"+appName+KEY_PREFIX_CONFIG);
 		final EoAppConfigProperties properties=new EoAppConfigProperties(appName,pizzaURL);
 		if(resources!=null){

@@ -1,4 +1,4 @@
-package com.sendtomooon.eroica.eoapp.protocol.web;
+package com.sendtomoon.eroica.eoapp.protocol.web;
 
 import java.io.IOException;
 
@@ -9,8 +9,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.pingan.pafa.pizza.Pizza;
-import com.sendtomooon.eroica.eoapp.EoApp;
+import com.sendtomoon.eroica.pizza.Pizza;
+import com.sendtomoon.eroica.eoapp.EoApp;
 
 public class EoappServlet implements javax.servlet.Servlet {
 
