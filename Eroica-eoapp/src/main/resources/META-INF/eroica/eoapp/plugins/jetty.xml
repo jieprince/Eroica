@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+ 
+	<bean id="_eoapp_jetty" class="com.sendtomoon.eroica.eoapp.protocol.jetty.JettyProtocolBean"
+		lazy-init="false">
+		<property name="appName" value="${eoapp.name}"/>
+		<property name="configureResource" value="pizza:/eoapp/${eoapp.name}.jetty.properties"/>
+		<property name="configureProperties" ref="_eoapp_properties"></property>
+	</bean>
+	
+</beans>
