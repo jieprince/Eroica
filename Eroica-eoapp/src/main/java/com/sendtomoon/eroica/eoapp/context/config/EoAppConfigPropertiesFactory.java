@@ -18,19 +18,17 @@ import org.springframework.util.PropertyPlaceholderHelper.PlaceholderResolver;
 import com.sendtomoon.eroica.pizza.PizzaConstants;
 import com.sendtomoon.eroica.pizza.classloader.PizzaURL;
 
-public class EoAppConfigPropertiesFactory  implements ApplicationContextAware
-	,InitializingBean,FactoryBean<EoAppConfigProperties>{
-	
-	protected Log logger=LogFactory.getLog(this.getClass());
-	
+public class EoAppConfigPropertiesFactory
+		implements ApplicationContextAware, InitializingBean, FactoryBean<EoAppConfigProperties> {
 
-	private static final String KEY_PREFIX_CONFIG=".properties";
-	
-	private static final String CONGIGLOCATION_NAME="classpath*:/META-INF/eroica/eoapp-default.properties";
-	
+	protected Log logger = LogFactory.getLog(this.getClass());
+
+	private static final String KEY_PREFIX_CONFIG = ".properties";
+
+	private static final String CONGIGLOCATION_NAME = "classpath*:/META-INF/eroica/eoapp-default.properties";
 
 	private ConfigurableApplicationContext applicationContext;
-	
+
 	private EoAppConfigProperties properties;
 
 	@Override
@@ -50,58 +48,57 @@ public class EoAppConfigPropertiesFactory  implements ApplicationContextAware
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		Resource[] resources=applicationContext.getResources(CONGIGLOCATION_NAME);
-		String appName=com.sendtomoon.eroica.pizza.Pizza.getAppName();
-		PizzaURL pizzaURL=PizzaURL.valueOf(PizzaConstants.GROUP_EOAPP+"/"+appName+KEY_PREFIX_CONFIG);
-		final EoAppConfigProperties properties=new EoAppConfigProperties(appName,pizzaURL);
-		if(resources!=null){
-			for(Resource resource:resources){
-				if(logger.isInfoEnabled()){
-					logger.info("ReadEoappConfigs:"+resource);
+		Resource[] resources = applicationContext.getResources(CONGIGLOCATION_NAME);
+		String appName = com.sendtomoon.eroica.pizza.Pizza.getAppName();
+		PizzaURL pizzaURL = PizzaURL.valueOf(PizzaConstants.GROUP_EOAPP + "/" + appName + KEY_PREFIX_CONFIG);
+		final EoAppConfigProperties properties = new EoAppConfigProperties(appName, pizzaURL);
+		if (resources != null) {
+			for (Resource resource : resources) {
+				if (logger.isInfoEnabled()) {
+					logger.info("ReadEoappConfigs:" + resource);
 				}
-				InputStream input=null;
-				try{
-					input=resource.getInputStream();
+				InputStream input = null;
+				try {
+					input = resource.getInputStream();
 					properties.load(input);
-				}finally{
-					if(input!=null)input.close();
+				} finally {
+					if (input != null)
+						input.close();
 				}
 			}
 		}
-		//----------------------------------------------------------------------------------------
+		// ----------------------------------------------------------------------------------------
 		properties.refresh();
 		properties.load(pizzaURL, false);
-		//--------------------------------------------------
+		// --------------------------------------------------
 		PropertyPlaceholderHelper helper = new PropertyPlaceholderHelper("${", "}", ":", false);
-		PlaceholderResolver placeholderResolver=new PlaceholderResolver(){
+		PlaceholderResolver placeholderResolver = new PlaceholderResolver() {
 			@Override
 			public String resolvePlaceholder(String key) {
-				String value= properties.getProperty(key);
-				if(value==null){
-					value=System.getProperty(key);
+				String value = properties.getProperty(key);
+				if (value == null) {
+					value = System.getProperty(key);
 				}
 				return value;
 			}
 		};
-		Set<String> keys=properties.stringPropertyNames();
-		for(String key:keys){
-			String value=properties.getProperty(key);
-			if(value!=null && value.length()>5){
-				String newValue=helper.replacePlaceholders(value, placeholderResolver);
-				if(!newValue.equals(value)){
+		Set<String> keys = properties.stringPropertyNames();
+		for (String key : keys) {
+			String value = properties.getProperty(key);
+			if (value != null && value.length() > 5) {
+				String newValue = helper.replacePlaceholders(value, placeholderResolver);
+				if (!newValue.equals(value)) {
 					properties.put(key, newValue);
 				}
 			}
 		}
-		
-		this.properties=properties;
+
+		this.properties = properties;
 	}
 
 	@Override
-	public void setApplicationContext(ApplicationContext context)
-			throws BeansException {
-		this.applicationContext=(ConfigurableApplicationContext)context;
+	public void setApplicationContext(ApplicationContext context) throws BeansException {
+		this.applicationContext = (ConfigurableApplicationContext) context;
 	}
-	
 
 }
