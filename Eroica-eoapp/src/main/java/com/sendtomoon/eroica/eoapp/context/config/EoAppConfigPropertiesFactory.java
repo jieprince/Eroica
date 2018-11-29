@@ -15,6 +15,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.util.PropertyPlaceholderHelper;
 import org.springframework.util.PropertyPlaceholderHelper.PlaceholderResolver;
 
+import com.sendtomoon.eroica.pizza.Pizza;
 import com.sendtomoon.eroica.pizza.PizzaConstants;
 import com.sendtomoon.eroica.pizza.classloader.PizzaURL;
 
@@ -49,7 +50,7 @@ public class EoAppConfigPropertiesFactory
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		Resource[] resources = applicationContext.getResources(CONGIGLOCATION_NAME);
-		String appName = com.sendtomoon.eroica.pizza.Pizza.getAppName();
+		String appName = Pizza.getAppName();
 		PizzaURL pizzaURL = PizzaURL.valueOf(PizzaConstants.GROUP_EOAPP + "/" + appName + KEY_PREFIX_CONFIG);
 		final EoAppConfigProperties properties = new EoAppConfigProperties(appName, pizzaURL);
 		if (resources != null) {
