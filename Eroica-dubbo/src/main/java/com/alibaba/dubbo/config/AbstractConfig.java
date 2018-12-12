@@ -313,47 +313,6 @@ public abstract class AbstractConfig implements Serializable {
         }
     }
     
-  /*  protected static void appendAttributes(Map<Object, Object> parameters, Object config) {
-        appendAttributes(parameters, config, null);
-    }
-    
-    protected static void appendAttributes(Map<Object, Object> parameters, Object config, String prefix) {
-        if (config == null) {
-            return;
-        }
-        Method[] methods = config.getClass().getMethods();
-        for (Method method : methods) {
-            try {
-                String name = method.getName();
-                if ((name.startsWith("get") || name.startsWith("is")) 
-                        && ! "getClass".equals(name)
-                        && Modifier.isPublic(method.getModifiers()) 
-                        && method.getParameterTypes().length == 0
-                        && isPrimitive(method.getReturnType())) {
-                    Parameter parameter = method.getAnnotation(Parameter.class);
-                    if (parameter == null || !parameter.attribute())
-                        continue;
-                    String key;
-                    if (parameter != null && parameter.key() != null && parameter.key().length() > 0) {
-                        key = parameter.key();
-                    } else {
-                        int i = name.startsWith("get") ? 3 : 2;
-                        key = name.substring(i, i + 1).toLowerCase() + name.substring(i + 1);
-                    }
-                    Object value = method.invoke(config, new Object[0]);
-                    if (value != null) {
-                        if (prefix != null && prefix.length() > 0) {
-                            key = prefix + "." + key;
-                        }
-                        parameters.put(key, value);
-                    }
-                }
-            } catch (Exception e) {
-                throw new IllegalStateException(e.getMessage(), e);
-            }
-        }
-    }*/
-    
     private static boolean isPrimitive(Class<?> type) {
         return type.isPrimitive() 
                 || type == String.class 
@@ -471,17 +430,6 @@ public abstract class AbstractConfig implements Serializable {
             }
         }
     }
-   /*
-   static {
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            public void run() {
-                if (logger.isInfoEnabled()) {
-                    logger.info("Run shutdown hook now.");
-                }
-                ProtocolConfig.destroyAll();
-            }
-        }, "DubboShutdownHook"));
-    }*/
     
     private static final String[] SUFFIXS = new String[] {"Config", "Bean"};
     
