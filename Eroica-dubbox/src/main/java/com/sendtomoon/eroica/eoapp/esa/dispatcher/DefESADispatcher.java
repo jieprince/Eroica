@@ -94,11 +94,6 @@ public class DefESADispatcher extends ActionDispatcher implements InitializingBe
 				Class<?> beanClazz = AopUtils.getTargetClass(bean);
 				ESA annotation = beanClazz.getAnnotation(ESA.class);
 				String esaName = null;
-//				if (annotation == null) {
-//					if (bean instanceof ESA) {
-//						esaName = beanName;
-//					}
-//				} else {
 				esaName = annotation.value();
 				if (esaName.length() == 0) {
 					esaName = annotation.name();
@@ -106,7 +101,6 @@ public class DefESADispatcher extends ActionDispatcher implements InitializingBe
 				if (esaName.length() == 0) {
 					esaName = beanName;
 				}
-//				}
 				if (esaName != null) {
 					if (annotation != null) {
 						this.addConfig(esaName, ESAConfigUtils.getESAConfig(annotation));

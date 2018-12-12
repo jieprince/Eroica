@@ -40,9 +40,6 @@ public class DefESAExceptionResolver implements ESAExceptionResolver, Ordered {
 		}
 
 		ServiceResponse resp = resolveExceptionServiceResponse(codeEx);
-//		Cat.logEvent("ESA.Service.Exception",esaName+":"+code,code,resp.getResponseMsg());	//名称做type太多，统一归类不能看错误码分布
-//		Cat.logError(ex);
-
 		return resp;
 	}
 
