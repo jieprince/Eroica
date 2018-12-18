@@ -8,11 +8,11 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoCredential;
 import com.mongodb.ServerAddress;
+import com.mongodb.client.MongoDatabase;
 
 public class MongoTemplateFactoryBean extends MongodbConfigureHandler
 		implements FactoryBean<MongoTemplate>, DisposableBean, InitializingBean {
@@ -32,7 +32,6 @@ public class MongoTemplateFactoryBean extends MongodbConfigureHandler
 		}
 		List<MongoCredential> credentials = this.resolveCredentials(configure);
 		if (serverList.size() == 1) {
-			// MongoAuthority.Type=direct
 			if ("direct".equals(configure.getAuthorityType())) {
 				return new MongoClient(serverList.get(0), clientOptions);
 			} else {
@@ -52,9 +51,9 @@ public class MongoTemplateFactoryBean extends MongodbConfigureHandler
 		if (template == null) {
 			this.mongoClient = this.initializeMongoClient();
 			MongodbConfigure configure = this.getConfigure();
-			DB mongodb = mongoClient.getDB(configure.getDbname());
+			MongoDatabase mongodb = mongoClient.getDatabase(configure.getDbname());
 			if (logger.isInfoEnabled()) {
-				logger.info("MongodbClient created success,stats=" + mongodb.getStats());
+				logger.info("MongodbClient created success,stats=" + mongodb.getName());
 			}
 			this.template = new MongoTemplate(mongoClient, configure.getDbname());
 		}

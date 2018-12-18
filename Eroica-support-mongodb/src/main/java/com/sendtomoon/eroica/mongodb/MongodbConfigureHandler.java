@@ -20,6 +20,7 @@ import com.alibaba.dubbo.common.URL;
 import com.alibaba.fastjson.JSONObject;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoCredential;
+import com.mongodb.MongoException;
 import com.mongodb.ReadPreference;
 import com.mongodb.ServerAddress;
 import com.mongodb.WriteConcern;
@@ -123,11 +124,15 @@ public class MongodbConfigureHandler {
 		if (MongoCredential.SCRAM_SHA_1_MECHANISM.equalsIgnoreCase(configure.getCredentialsType())) {
 			return Arrays
 					.asList(MongoCredential.createScramSha1Credential(user, configure.getDbname(), pwd.toCharArray()));
+		} else if (MongoCredential.SCRAM_SHA_256_MECHANISM.equalsIgnoreCase(configure.getCredentialsType())) {
+			return Arrays
+					.asList(MongoCredential.createScramSha1Credential(user, configure.getDbname(), pwd.toCharArray()));
 		} else if (MongoCredential.PLAIN_MECHANISM.equalsIgnoreCase(configure.getCredentialsType())) {
 			return Arrays.asList(MongoCredential.createPlainCredential(user, configure.getDbname(), pwd.toCharArray()));
+		} else if (MongoCredential.MONGODB_CR_MECHANISM.equalsIgnoreCase(configure.getCredentialsType())) {
+			throw new MongoException("不能使用MONGODB-CR");
 		} else {
-			return Arrays
-					.asList(MongoCredential.createMongoCRCredential(user, configure.getDbname(), pwd.toCharArray()));
+			return null;
 		}
 
 	}
