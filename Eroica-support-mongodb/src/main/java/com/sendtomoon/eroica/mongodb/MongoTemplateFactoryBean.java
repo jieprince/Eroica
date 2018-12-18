@@ -30,19 +30,11 @@ public class MongoTemplateFactoryBean extends MongodbConfigureHandler
 		if (logger.isInfoEnabled()) {
 			logger.info("MongodbClient Create by configure=" + JSONObject.toJSONString(this.getConfigure()));
 		}
-		List<MongoCredential> credentials = this.resolveCredentials(configure);
+		MongoCredential credentials = this.resolveCredentials(configure);
 		if (serverList.size() == 1) {
-			if ("direct".equals(configure.getAuthorityType())) {
-				return new MongoClient(serverList.get(0), clientOptions);
-			} else {
-				return new MongoClient(serverList, credentials, clientOptions);
-			}
+			return new MongoClient(serverList.get(0), credentials, clientOptions);
 		} else {
-			if ("direct".equals(configure.getAuthorityType())) {
-				return new MongoClient(serverList.get(0), clientOptions);
-			} else {
-				return new MongoClient(serverList, credentials, clientOptions);
-			}
+			return new MongoClient(serverList, credentials, clientOptions);
 		}
 	}
 

@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -20,7 +19,6 @@ import com.alibaba.dubbo.common.URL;
 import com.alibaba.fastjson.JSONObject;
 import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoCredential;
-import com.mongodb.MongoException;
 import com.mongodb.ReadPreference;
 import com.mongodb.ServerAddress;
 import com.mongodb.WriteConcern;
@@ -112,7 +110,7 @@ public class MongodbConfigureHandler {
 				.getPassword(new PasswordContext(passwordKey).setRequired(true));
 	}
 
-	protected List<MongoCredential> resolveCredentials(MongodbConfigure configure) {
+	protected MongoCredential resolveCredentials(MongodbConfigure configure) {
 		String user = configure.getUser();
 		if (user == null || (user = user.trim()).length() == 0) {
 			return null;
@@ -122,15 +120,11 @@ public class MongodbConfigureHandler {
 			pwd = readPassword(user, configure.getPasswordKey(), configure.getPasswordProvider());
 		}
 		if (MongoCredential.SCRAM_SHA_1_MECHANISM.equalsIgnoreCase(configure.getCredentialsType())) {
-			return Arrays
-					.asList(MongoCredential.createScramSha1Credential(user, configure.getDbname(), pwd.toCharArray()));
+			return MongoCredential.createScramSha1Credential(user, configure.getDbname(), pwd.toCharArray());
 		} else if (MongoCredential.SCRAM_SHA_256_MECHANISM.equalsIgnoreCase(configure.getCredentialsType())) {
-			return Arrays.asList(
-					MongoCredential.createScramSha256Credential(user, configure.getDbname(), pwd.toCharArray()));
+			return MongoCredential.createScramSha256Credential(user, configure.getDbname(), pwd.toCharArray());
 		} else if (MongoCredential.PLAIN_MECHANISM.equalsIgnoreCase(configure.getCredentialsType())) {
-			return Arrays.asList(MongoCredential.createPlainCredential(user, configure.getDbname(), pwd.toCharArray()));
-		} else if (MongoCredential.MONGODB_CR_MECHANISM.equalsIgnoreCase(configure.getCredentialsType())) {
-			throw new MongoException("不能使用MONGODB-CR");
+			return MongoCredential.createCredential(user, configure.getDbname(), pwd.toCharArray());
 		} else {
 			return null;
 		}
