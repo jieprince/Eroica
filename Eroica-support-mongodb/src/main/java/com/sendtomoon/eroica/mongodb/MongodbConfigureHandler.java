@@ -125,8 +125,8 @@ public class MongodbConfigureHandler {
 			return Arrays
 					.asList(MongoCredential.createScramSha1Credential(user, configure.getDbname(), pwd.toCharArray()));
 		} else if (MongoCredential.SCRAM_SHA_256_MECHANISM.equalsIgnoreCase(configure.getCredentialsType())) {
-			return Arrays
-					.asList(MongoCredential.createScramSha1Credential(user, configure.getDbname(), pwd.toCharArray()));
+			return Arrays.asList(
+					MongoCredential.createScramSha256Credential(user, configure.getDbname(), pwd.toCharArray()));
 		} else if (MongoCredential.PLAIN_MECHANISM.equalsIgnoreCase(configure.getCredentialsType())) {
 			return Arrays.asList(MongoCredential.createPlainCredential(user, configure.getDbname(), pwd.toCharArray()));
 		} else if (MongoCredential.MONGODB_CR_MECHANISM.equalsIgnoreCase(configure.getCredentialsType())) {
