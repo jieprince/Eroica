@@ -42,7 +42,6 @@ public class SARManagerBean implements SARManager, ApplicationContextAware {
 	}
 
 	private volatile ConfigurableApplicationContext applicationContext = null;
-	//
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -233,24 +232,16 @@ public class SARManagerBean implements SARManager, ApplicationContextAware {
 
 	protected SARContext _startupSAR(String sarName) {
 		SARContext SAR = null;
-//		Transaction t = null;
 		try {
-//			t = Cat.newTransaction("SARManager.startup", sarName);
 			SAR = sarContextFactory.create(sarName);
-//			t.setSuccessStatus();
 		} catch (Throwable th) {
-//			t.setStatus(th.getMessage());
-//			Cat.logError(th);
-		} finally {
-//			t.complete();
+			logger.error(th, th);
 		}
-
 		if (SAR == null)
 			return null;
 		SAR.startup();
 		if (!SAR.isRunning()) {
 			SARStartupFailedEvent event = new SARStartupFailedEvent(SAR);
-			// Pizza.getSpringContext().publishEvent(event);
 			applicationContext.publishEvent(event);
 		}
 		return SAR;

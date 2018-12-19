@@ -87,48 +87,34 @@ public class EoAppLifecycleBean
 	}
 
 	protected synchronized final boolean doStartup() {
-//		Transaction t = Cat.newTransaction("Lifcycle.startup", "EoAPP");
 		try {
 			if (isRunning) {
 				return false;
 			}
 			long t1 = System.nanoTime();
-
 			initClassloader();
-
-			// ----------------------------------------------
 			EoAppSpringContext springContext = initSpringContext();
-
 			SARManager sarManager = startupSARs(springContext);
-			//
 			EoAppStartupedEvent event = new EoAppStartupedEvent(springContext.getApplicationContext());
-
 			springContext.getApplicationContext().publishEvent(event);
 			Pizza.getSpringContext().publishEvent(event);
 			this.springContext = springContext;
 			this.sarManager = sarManager;
-			// -----------------------------------------------
 			isRunning = true;
 			startFailed = false;
 			if (logger.isInfoEnabled()) {
 				logger.info("EoApp<" + eoappName + "> startup completed, times="
 						+ (System.nanoTime() - t1) / 1000 / 1000.0 + "ms.");
 			}
-//			t.setSuccessStatus();
 			return isRunning;
 		} catch (RuntimeException e) {
-//			t.setStatus(e);
 			throw e;
-		} catch (Error e) { // 这个没意义，类似的还有
-//			t.setStatus(e);
+		} catch (Error e) {
 			throw e;
-		} finally {
-//			t.complete();
 		}
 	}
 
 	private SARManager startupSARs(EoAppSpringContext springContext) {
-//		Transaction t = Cat.newTransaction("Lifcycle.SARStartup", "EoAPP");
 		try {
 
 			this.servletContext = springContext.getServletContext();
@@ -137,45 +123,32 @@ public class EoAppLifecycleBean
 			if (logger.isInfoEnabled()) {
 				logger.info("EoApp SARList=" + sarList);
 			}
-//			t.addData("SARList", sarList);
 			SARManager sarManager = springContext.getApplicationContext().getBean(SARManager.class);
 			sarManager.startupSARs(sarList);
-//			t.setSuccessStatus();
 			return sarManager;
 		} catch (RuntimeException e) {
-//			t.setStatus(e);
 			throw e;
 		} catch (Error e) {
-//			t.setStatus(e);
 			throw e;
-		} finally {
-//			t.complete();
 		}
 	}
 
 	private EoAppSpringContext initSpringContext() {
-//		Transaction t = Cat.newTransaction("Lifcycle.ContextInit", "EoAPP");
 		try {
 			EoAppSpringContextFactory springContextFactory = this.getSpringContextFactory();
 			if (springContextFactory == null) {
 				throw new NullPointerException("springContextFactory is null.");
 			}
 			EoAppSpringContext springContext = springContextFactory.create(classLoader, servletContext, this.getPola());
-//			t.setSuccessStatus();
 			return springContext;
 		} catch (RuntimeException e) {
-//			t.setStatus(e);
 			throw e;
 		} catch (Error e) {
-//			t.setStatus(e);
 			throw e;
-		} finally {
-//			t.complete();
 		}
 	}
 
 	private void initClassloader() {
-//		Transaction t = Cat.newTransaction("Lifcycle.ClassloaderInit", "EoAPP");
 		try {
 			if (logger.isInfoEnabled()) {
 				logger.info("EoApp<" + eoappName + "> startup,datetime="
@@ -193,20 +166,14 @@ public class EoAppLifecycleBean
 			if (logger.isInfoEnabled()) {
 				logger.info("EoAppClassLoader=" + classLoader);
 			}
-//			t.setSuccessStatus();
 		} catch (RuntimeException e) {
-//			t.setStatus(e);
 			throw e;
 		} catch (Error e) {
-//			t.setStatus(e);
 			throw e;
-		} finally {
-//			t.complete();
 		}
 	}
 
 	protected synchronized final boolean doShutdown() {
-//		Transaction t = Cat.newTransaction("EoAPP", "EoAPP.Lifecycle.doShutdown");
 		try {
 			PizzaClassLoader classLoader = this.classLoader;
 			if (classLoader != null) {
@@ -245,40 +212,27 @@ public class EoAppLifecycleBean
 			applicationContext = null;
 			this.startFailed = false;
 			logger.info("EoApp<" + eoappName + "> shutdown completed.");
-
-//			t.setSuccessStatus();
 			return true;
 		} catch (RuntimeException e) {
-//			t.setStatus(e);
 			throw e;
 		} catch (Error e) {
-//			t.setStatus(e);
 			throw e;
-		} finally {
-//			t.complete();
 		}
 	}
 
 	public boolean shutdown() {
-//		Transaction t = Cat.newTransaction("Lifcycle.shutdown", "EoAPP");
 		lock.lock();
-
-//		t.addData("eoappName", eoappName);
 		try {
 			if (this.isRunning) {
 				boolean b = doShutdown();
-//				t.setSuccessStatus();
 				return b;
 			}
 			return false;
 		} catch (Throwable th) {
-//			t.setStatus(th);
-//			Cat.logError(th);
 			logger.error("EoAPP<" + eoappName + ">shutdown failed,cause:\n" + th.getLocalizedMessage(), th);
 			return false;
 		} finally {
 			lock.unlock();
-//			t.complete();
 		}
 	}
 
@@ -365,7 +319,6 @@ public class EoAppLifecycleBean
 				if (classLoader != null) {
 					Thread.currentThread().setContextClassLoader(classLoader);
 				}
-				// -------------------
 				sarManager.refreshSARs(configProperties.getProperty(EoAppConstants.KEY_SAR_LIST));
 			}
 		} catch (Throwable ex) {

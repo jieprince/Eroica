@@ -95,68 +95,74 @@ public class DubboInitializer implements SmartLifecycle, BeanFactoryPostProcesso
 	}
 
 	protected void initDubboConfigs() {
-		Properties dubboProperties = new Properties();
-		String pmURL = System.getProperty(PizzaConstants.KEY_MANAGER);
-		if (pmURL != null && (pmURL = pmURL.trim()).length() > 0
-				&& PURL.valueOf(pmURL).getProtocol().equalsIgnoreCase("zookeeper")) {
-			dubboProperties.setProperty("dubbo.registry.address", pmURL);
-		} else {
-			dubboProperties.setProperty("dubbo.registry.address", "N/A");
-		}
-		dubboProperties.setProperty("dubbo.protocol.host", PNetUtils.getLocalHost());
-		//
-
-		InputStream input = this.getClass().getClassLoader().getResourceAsStream(DUBBO_DEF_CONFIG);
 		try {
-			dubboProperties.load(input);
-		} catch (IOException e) {
-			//
-		} finally {
-			try {
-				input.close();
-			} catch (IOException e) {
+			Properties dubboProperties = new Properties();
+			String pmURL = System.getProperty(PizzaConstants.KEY_MANAGER);
+			if (pmURL != null && (pmURL = pmURL.trim()).length() > 0
+					&& PURL.valueOf(pmURL).getProtocol().equalsIgnoreCase("zookeeper")) {
+				dubboProperties.setProperty("dubbo.registry.address", pmURL);
+			} else {
+				dubboProperties.setProperty("dubbo.registry.address", "N/A");
 			}
-		}
-		Properties configureProperties = this.configureProperties;
-		if (configureProperties == null) {
-			configureProperties = new Properties();
-		}
-		if (configureResource != null && configureResource.exists()) {
-			InputStreamReader reader = null;
+			dubboProperties.setProperty("dubbo.protocol.host", PNetUtils.getLocalHost());
+			//
+
+			InputStream input = this.getClass().getClassLoader().getResourceAsStream(DUBBO_DEF_CONFIG);
 			try {
-				reader = new InputStreamReader(configureResource.getInputStream());
-				configureProperties.load(reader);
+				dubboProperties.load(input);
 			} catch (IOException e) {
-				throw new EoAppException("Read:" + configureResource + " error,cause:" + e.getMessage(), e);
+				logger.error(e);
 			} finally {
 				try {
-					if (reader != null)
-						reader.close();
+					input.close();
 				} catch (IOException e) {
+					logger.error(e);
 				}
 			}
-		}
-		if (configureProperties != null && configureProperties.size() > 0) {
-			Enumeration<Object> keys = configureProperties.keys();
-			while (keys.hasMoreElements()) {
-				String key = (String) keys.nextElement();
-				if (key.startsWith("dubbo.")) {
-					dubboProperties.setProperty(key, configureProperties.getProperty(key));
+			Properties configureProperties = this.configureProperties;
+			if (configureProperties == null) {
+				configureProperties = new Properties();
+			}
+			if (configureResource != null && configureResource.exists()) {
+				InputStreamReader reader = null;
+				try {
+					reader = new InputStreamReader(configureResource.getInputStream());
+					configureProperties.load(reader);
+				} catch (Exception e) {
+					logger.error(e, e);
+					throw new EoAppException("Read:" + configureResource + " error,cause:" + e.getMessage(), e);
+				} finally {
+					try {
+						if (reader != null)
+							reader.close();
+					} catch (IOException e) {
+					}
 				}
 			}
+			if (configureProperties != null && configureProperties.size() > 0) {
+				Enumeration<Object> keys = configureProperties.keys();
+				while (keys.hasMoreElements()) {
+					String key = (String) keys.nextElement();
+					if (key.startsWith("dubbo.")) {
+						dubboProperties.setProperty(key, configureProperties.getProperty(key));
+					}
+				}
+			}
+			String appName = this.appName;
+			//
+			if (appName == null) {
+				Assert.hasLength(appName, "appName requried.");
+			}
+			dubboProperties.setProperty("dubbo.application.name", appName);
+			//
+			if (logger.isInfoEnabled()) {
+				logger.info("dubboProperties=" + dubboProperties);
+			}
+			ConfigUtils.setProperties(dubboProperties);
+			isRunning = true;
+		} catch (Exception e) {
+			logger.error(e, e);
 		}
-		String appName = this.appName;
-		//
-		if (appName == null) {
-			Assert.hasLength(appName, "appName requried.");
-		}
-		dubboProperties.setProperty("dubbo.application.name", appName);
-		//
-		if (logger.isInfoEnabled()) {
-			logger.info("dubboProperties=" + dubboProperties);
-		}
-		ConfigUtils.setProperties(dubboProperties);
-		isRunning = true;
 	}
 
 	@Override

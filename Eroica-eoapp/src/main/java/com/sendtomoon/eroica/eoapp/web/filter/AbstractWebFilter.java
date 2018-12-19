@@ -16,20 +16,18 @@ import org.springframework.core.Ordered;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.context.ServletContextAware;
 
-public abstract class AbstractWebFilter implements WebFilter,Ordered
-	,BeanNameAware
-	,ServletContextAware{
-	
+public abstract class AbstractWebFilter implements WebFilter, Ordered, BeanNameAware, ServletContextAware {
+
 	private List<String> patterns;
-	
+
 	private int order = 0;
-	
+
 	private Properties initParams;
-	
+
 	protected String beanName;
-	
-	protected  Log logger= LogFactory.getLog(this.getClass());
-	
+
+	protected Log logger = LogFactory.getLog(this.getClass());
+
 	private ServletContext servletContext;
 
 	@Override
@@ -38,67 +36,64 @@ public abstract class AbstractWebFilter implements WebFilter,Ordered
 	}
 
 	@Override
-	public  void destroy() {
-		
+	public void destroy() {
+
 	}
-	
 
 	@Override
-	public  void setBeanName(String name) {
-		if(beanName==null){
-			this.beanName=name;
+	public void setBeanName(String name) {
+		if (beanName == null) {
+			this.beanName = name;
 		}
 	}
-	
 
 	@Override
 	public final void setServletContext(ServletContext servletContext) {
-		this.servletContext=servletContext;
+		this.servletContext = servletContext;
 	}
-
 
 	@Override
 	public final void afterPropertiesSet() throws Exception {
-		if(patterns==null || patterns.size()==0){
+		if (patterns == null || patterns.size() == 0) {
 			throw new FatalBeanException("patterns required.");
 		}
-		if(servletContext==null){
+		if (servletContext == null) {
 			throw new FatalBeanException("servletContext required.");
 		}
 		doInit(servletContext);
 	}
-	
-	protected final void doInit(ServletContext servletContext) throws Exception{
-		FilterConfig filterConfig=new DefaultFilterConfig(this.beanName,this.initParams,servletContext);
+
+	protected final void doInit(ServletContext servletContext) throws Exception {
+		FilterConfig filterConfig = new DefaultFilterConfig(this.beanName, this.initParams, servletContext);
 		init(filterConfig);
 	}
-	
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
-		
+
 	}
 
 	public void setPatterns(List<String> patterns) {
 		this.patterns = patterns;
 	}
-	
+
 	public void setAntPatterns(List<String> patterns) {
 		this.patterns = patterns;
 	}
-	
+
 	public void setPatterns(String patterns) {
 		this.patterns = CollectionUtils.arrayToList(StringUtils.split(patterns, ", "));
 	}
-	
+
 	public void setAntPatterns(String patterns) {
 		this.patterns = CollectionUtils.arrayToList(StringUtils.split(patterns, ", "));
 	}
+
 	@SuppressWarnings("unchecked")
 	public void setPattern(String pattern) {
-		this.patterns = CollectionUtils.arrayToList(new String[]{pattern});
+		this.patterns = CollectionUtils.arrayToList(new String[] { pattern });
 	}
-	
+
 	public void setAntPattern(String pattern) {
 		setPattern(pattern);
 	}
@@ -124,11 +119,4 @@ public abstract class AbstractWebFilter implements WebFilter,Ordered
 		return initParams;
 	}
 
-
-
-	
-	
-	
-	
-	
 }

@@ -31,6 +31,12 @@ import com.sendtomoon.eroica.eoapp.context.config.EoAppConfigProperties;
 import com.sendtomoon.eroica.eoapp.web.support.ServletContextBeanPostProcessor;
 import com.sendtomoon.eroica.eoapp.web.support.ServletContextHandler;
 
+/**
+ * 上下文工厂类
+ * 
+ * @author lbt42
+ *
+ */
 public class EoAppSpringContextFactoryBean implements EoAppSpringContextFactory {
 
 	protected static final String KEY_PREFIX_SPRING = ".spring.xml";
@@ -61,6 +67,9 @@ public class EoAppSpringContextFactoryBean implements EoAppSpringContextFactory 
 		this.configProperties = configProperties;
 	}
 
+	/**
+	 * 获取pizza目录，配置pizza上下文   获取bean送到spring
+	 */
 	@Override
 	public EoAppSpringContext create(ClassLoader classLoader, final ServletContext originalServletContext,
 			final Pola pola) {

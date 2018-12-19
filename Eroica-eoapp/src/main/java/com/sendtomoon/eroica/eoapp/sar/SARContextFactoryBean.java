@@ -46,28 +46,33 @@ public class SARContextFactoryBean implements SARContextFactory, ApplicationCont
 
 	@Override
 	public SARContext create(String sarName) {
-		String pizzaURL = PizzaConstants.GROUP_SAR + "/" + sarName + KEY_PREFIX;
-		// 组件配置文件必须存在
-		boolean requriedExists = true;
-		//
-		PizzaProperties properties = new PizzaProperties(pizzaURL, requriedExists);
-		if (logger.isInfoEnabled()) {
-			logger.info("SAR:" + sarName + " pizza properties=" + properties);
+		try {
+			String pizzaURL = PizzaConstants.GROUP_SAR + "/" + sarName + KEY_PREFIX;
+			// 组件配置文件必须存在
+			boolean requriedExists = true;
+			//
+			PizzaProperties properties = new PizzaProperties(pizzaURL, requriedExists);
+			if (logger.isInfoEnabled()) {
+				logger.info("SAR:" + sarName + " pizza properties=" + properties);
+			}
+			properties.put(SARAttrs.KEY_SAR_NAME, sarName);
+			SARAttrs attrs = new SARAttrs(sarName, properties);
+			SARClassLoaderFactory classloaderFactory = new SARClassLoaderFactoryBean(attrs, this.getPola());
+			//
+			ConfigurableApplicationContext eoappSpringContext = this.eoappSpringContext;
+			if (eoappSpringContext == null) {
+				throw new FatalBeanException("eoappSpringContext required.");
+			}
+			PizzaClassLoader classLoader = classloaderFactory.createClassLoader(eoappSpringContext.getClassLoader(),
+					this.servletContext);
+			Class<?> bootClass = bootClassResolver.resolve(attrs, classLoader);
+			SARContextAttrs contextAttrs = createSARContextAttrs(sarName, properties, bootClass);
+			checkBasePackage(contextAttrs, classLoader);
+			return new SARContextBean(contextAttrs, classLoader, eoappSpringContext, this.servletContext);
+		} catch (Exception e) {
+			logger.error(e, e);
+			return null;
 		}
-		properties.put(SARAttrs.KEY_SAR_NAME, sarName);
-		SARAttrs attrs = new SARAttrs(sarName, properties);
-		SARClassLoaderFactory classloaderFactory = new SARClassLoaderFactoryBean(attrs, this.getPola());
-		//
-		ConfigurableApplicationContext eoappSpringContext = this.eoappSpringContext;
-		if (eoappSpringContext == null) {
-			throw new FatalBeanException("eoappSpringContext required.");
-		}
-		PizzaClassLoader classLoader = classloaderFactory.createClassLoader(eoappSpringContext.getClassLoader(),
-				this.servletContext);
-		Class<?> bootClass = bootClassResolver.resolve(attrs, classLoader);
-		SARContextAttrs contextAttrs = createSARContextAttrs(sarName, properties, bootClass);
-		checkBasePackage(contextAttrs, classLoader);
-		return new SARContextBean(contextAttrs, classLoader, eoappSpringContext, this.servletContext);
 	}
 
 	protected SARContextAttrs createSARContextAttrs(String sarName, PizzaProperties properties, Class<?> bootClass) {

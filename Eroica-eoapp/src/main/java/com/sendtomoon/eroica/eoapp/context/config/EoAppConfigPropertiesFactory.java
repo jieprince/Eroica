@@ -68,10 +68,8 @@ public class EoAppConfigPropertiesFactory
 				}
 			}
 		}
-		// ----------------------------------------------------------------------------------------
 		properties.refresh();
 		properties.load(pizzaURL, false);
-		// --------------------------------------------------
 		PropertyPlaceholderHelper helper = new PropertyPlaceholderHelper("${", "}", ":", false);
 		PlaceholderResolver placeholderResolver = new PlaceholderResolver() {
 			@Override

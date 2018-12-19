@@ -14,8 +14,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.Ordered;
-//import org.unidal.cat.Cat;
-//import org.unidal.cat.message.Transaction;
 
 import com.sendtomoon.eroica.common.app.biz.ac.ApplicationControllerLocal;
 import com.sendtomoon.eroica.common.app.dto.ServiceRequest;
@@ -72,114 +70,86 @@ public final class SARContextBean implements SARContext, Ordered {
 	}
 
 	private boolean initSARSpringContext(String sarName) {
-//		Transaction t = Cat.newTransaction("SAR.ContextInit", sarName);
 		try {
 			SARSpringContextFactory context = new SARSpringContextFactory();
 			ConfigurableApplicationContext springContext = context.create(eoappSpringContext, classLoader, contextAttrs,
 					servletContext);
-			// ------------------------
 			this.springContext = springContext;
 			this.dispatcher = context.getDispatcher();
 			this.webDispatcher = context.getWebDispatcher();
-
-//			t.setSuccessStatus();
 			return true;
-		} catch (Throwable e) {
-//			t.setStatus(e);
+		} catch (Exception e) {
+			logger.error("Error startup SAR:" + e, e);
 			return false;
-		} finally {
-//			t.complete();
 		}
 
 	}
 
 	private boolean publishSarEvent() {
-//		Transaction t = Cat.newTransaction("SAR.EventPublish", sarName);
-
 		try {
 			SARStartupedEvent event = new SARStartupedEvent(this);
 			springContext.publishEvent(event);
-//			t.setSuccessStatus();
 			return true;
 		} catch (Throwable e) {
-//			t.setStatus(e);
+			logger.error("Error publishSarEvent SAR:" + e, e);
 			return false;
-		} finally {
-//			t.complete();
 		}
 	}
 
 	@Override
 	public synchronized boolean startup() {
-//		Transaction t = Cat.newTransaction("SAR.startup", sarName);
 		String sarName = this.sarName;
 		lock.lock();
 		try {
 			if (running) {
 				throw new SARException("SAR:" + sarName + " be running.");
 			}
-			// ----------------
 			if (this.logger.isInfoEnabled()) {
 				logger.info("SAR<" + sarName + ">startup...");
 			}
 			long t1 = System.nanoTime();
-			// ------------------------
 			ClassLoader classLoader = this.classLoader;
 			if (classLoader == null) {
 				throw new NullPointerException("classLoader is null");
 			}
 			Thread.currentThread().setContextClassLoader(classLoader);
-			//
 			if (!initSARSpringContext(sarName)) {
 				return false;
 			}
 			if (!publishSarEvent()) {
 				return false;
 			}
-			// ----------------------------------------------------
 			if (this.logger.isInfoEnabled()) {
 				logger.info("SAR<" + sarName + ">startup completed, times=" + (System.nanoTime() - t1) / 1000 / 1000.0
 						+ "ms.");
 			}
 			running = true;
-//			t.setSuccessStatus();
 		} catch (BeanCreationException e) {
 			SARException ex = new SARException(e.getMessage(), e);
-//			t.setStatus(ex);
 			logger.error("SAR<" + sarName + ">startup failed,cause:\n" + e.getLocalizedMessage(), e);
 			running = false;
 		} catch (Throwable e) {
-//			t.setStatus(e);
 			logger.error("SAR<" + sarName + ">startup failed,cause:\n" + e.getLocalizedMessage(), e);
 			running = false;
 		} finally {
 			lock.unlock();
-//			t.complete();
 		}
 
 		return running;
 	}
 
 	public synchronized void shutdown() {
-//		Transaction t = Cat.newTransaction("SAR", "SAR.shutdown");
 		lock.lock();
-
-//		t.addData("sarName", sarName);
 		try {
 			if (running) {
 				running = false;
 				doShutdown();
 			}
-
-//			t.setSuccessStatus();
 		} catch (Throwable th) {
-//			t.setStatus(th);
-//			Cat.logError(th);
 			logger.error("SAR<" + sarName + ">shutdown failed,cause:\n" + th.getLocalizedMessage(), th);
 		} finally {
 			running = false;
 			lock.unlock();
-//			t.complete();
 		}
 	}
 
@@ -209,7 +179,6 @@ public final class SARContextBean implements SARContext, Ordered {
 			SARShutdownEvent event = new SARShutdownEvent(this);
 			springContext.publishEvent(event);
 		} catch (Throwable th) {
-//			Cat.logError(th);
 			logger.error("SAR<" + sarName + ">publishShutdownEvent error,cause:\n" + th.getLocalizedMessage(), th);
 		}
 		try {
@@ -240,7 +209,6 @@ public final class SARContextBean implements SARContext, Ordered {
 		if (webDispatcher == null) {
 			return false;
 		}
-		// --------------------------------------------------------------
 		ClassLoader classLoader = this.classLoader;
 		try {
 			if (classLoader != null) {

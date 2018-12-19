@@ -42,10 +42,8 @@
 	</bean>
 
 	
-	<bean id="_sar_esa_def_dispatcher" class="com.sendtomoon.eroica.eoapp.esa.dispatcher.DefESADispatcher">
-	</bean>
-	<bean id="_sar_esa_annotation_dispatcher"
-		class="com.sendtomoon.eroica.eoapp.esa.annotation.MethodESAHandleBean">
+	<bean id="_sar_esa_def_dispatcher" class="com.sendtomoon.eroica.eoapp.esa.dispatcher.DefESADispatcher"></bean>
+	<bean id="_sar_esa_annotation_dispatcher" class="com.sendtomoon.eroica.eoapp.esa.annotation.MethodESAHandleBean">
 		<property name="validator" ref="_sar_validator"></property>
 	</bean>
 	

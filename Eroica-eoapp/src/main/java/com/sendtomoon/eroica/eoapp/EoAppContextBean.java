@@ -122,6 +122,7 @@ public class EoAppContextBean extends EoApp implements EoAppContext, DisposableB
 
 	protected void runningCheck() {
 		if (rootContext != null && lifecycle != null && lifecycle.isRunning()) {
+
 		} else {
 			throw new EoAppException("Eroica<" + Pizza.getAppName() + "> startup failed or shutdowned!");
 		}
@@ -129,7 +130,6 @@ public class EoAppContextBean extends EoApp implements EoAppContext, DisposableB
 
 	@Override
 	public synchronized boolean startup() {
-//		Transaction t = Cat.newTransaction("EOAPP.startup", "EOAPP");
 		try {
 			if (!initEoAppLifecycle()) {
 				return false;
@@ -139,35 +139,25 @@ public class EoAppContextBean extends EoApp implements EoAppContext, DisposableB
 
 			this.springContext = this.lifecycle.getSpringContext();
 			boolean b = lifecycle.isRunning();
-//			t.addData("eoappName", getEoAppName());
-//			t.setSuccessStatus();
 			return b;
 		} catch (Throwable ex) {
-//			t.setStatus(ex);
 			logger.error(ex.getMessage(), ex);
 			return false;
-		} finally {
-//			t.complete();
 		}
 	}
 
 	private boolean initEoAppLifecycle() {
-//		Transaction t = Cat.newTransaction("EOAPP.LifecycleInit", "EOAPP");
 		try {
 			if (rootContext != null && lifecycle != null && lifecycle.isRunning()) {
 				return false;
 			}
-			// ------------------------------
 			rootContext = new EoAppRootContext();
 			this.lifecycle = rootContext.getBean(EoAppLifecycle.class);
 			lifecycle.setOriginalServletContext(this.originalServletContext);
-//			t.setSuccessStatus();
 			return true;
-		} catch (Throwable e) {
-//			t.setStatus(e);
+		} catch (Throwable ex) {
+			logger.error(ex.getMessage(), ex);
 			return false;
-		} finally {
-//			t.complete();
 		}
 
 	}

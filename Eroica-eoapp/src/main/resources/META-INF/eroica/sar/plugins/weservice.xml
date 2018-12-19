@@ -9,7 +9,7 @@
 		<property name="dubboProtocol" ref="_eoapp_dubbo"/>
 	 </bean>
 	 
-	 <bean id="_sar_weservice_consumer" class="com.paic.pafa.dubbo.ws.consumer.WeServiceConsumerBean">
+	 <bean id="_sar_weservice_consumer" class="com.sendtomoon.eroica.dubbo.ws.consumer.WeServiceConsumerBean">
 		<property name="consumerName" value="${sar.name}"/>
 	 </bean>
 </beans>

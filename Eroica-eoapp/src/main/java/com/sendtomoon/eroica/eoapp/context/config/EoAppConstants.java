@@ -30,6 +30,7 @@ public abstract class EoAppConstants {
 	
 	public static final String KEY_WEB_ROOT="eoapp.web.root";
 	
-	public static final String KEY_HTTP_ESA_ENABLE_PAFA52="eoapp.esa.http.export.enable";
+	//ESA接口http访问
+	public static final String KEY_HTTP_ESA_ENABLE_EROICA="eoapp.esa.http.export.enable";
 	
 }
