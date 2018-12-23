@@ -3,23 +3,22 @@ package com.sendtomoon.eroica.eoapp.esa;
 import java.util.Properties;
 
 public class ESADefinition {
-	
-	public static final String WEB_MAPPING_PATH="mappingPath";
-	 
+
+	public static final String WEB_MAPPING_PATH = "mappingPath";
+
 	private Properties properties;
-	
+
 	private String esaName;
-	
-	
-	public ESADefinition(String esaName){
-		this.esaName=esaName;
+
+	public ESADefinition(String esaName) {
+		this.esaName = esaName;
 	}
-	
-	public ESADefinition(String esaName,Properties properties){
-		this.esaName=esaName;
-		this.properties=properties;
+
+	public ESADefinition(String esaName, Properties properties) {
+		this.esaName = esaName;
+		this.properties = properties;
 	}
-	
+
 	public Properties getProperties() {
 		return properties;
 	}
@@ -35,8 +34,6 @@ public class ESADefinition {
 	public void setEsaName(String esaName) {
 		this.esaName = esaName;
 	}
-	
-	
 
 	@Override
 	public int hashCode() {
@@ -45,8 +42,8 @@ public class ESADefinition {
 
 	@Override
 	public boolean equals(Object obj) {
-		if(obj !=null && obj instanceof ESADefinition){
-			return esaName!=null && esaName.equals(((ESADefinition)obj).getEsaName());
+		if (obj != null && obj instanceof ESADefinition) {
+			return esaName != null && esaName.equals(((ESADefinition) obj).getEsaName());
 		}
 		return false;
 	}
@@ -56,10 +53,9 @@ public class ESADefinition {
 		return esaName;
 	}
 
-	public boolean isLocal(){
-		Object isLocal=(properties==null?null:properties.get("local"));
-		return properties!=null && isLocal!=null && isLocal.toString().equalsIgnoreCase("true");
+	public boolean isLocal() {
+		Object isLocal = (properties == null ? null : properties.get("local"));
+		return properties != null && isLocal != null && isLocal.toString().equalsIgnoreCase("true");
 	}
-
 
 }
