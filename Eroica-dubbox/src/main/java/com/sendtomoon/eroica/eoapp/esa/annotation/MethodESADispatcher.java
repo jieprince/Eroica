@@ -80,13 +80,9 @@ public class MethodESADispatcher implements ESADispatcher, ApplicationContextAwa
 		if (esaName == null || (esaName = esaName.trim()).length() == 0) {
 			throw new EroicaException("Not setter ESA name,request.requestedServiceID() is null.");
 		}
-		/*
-		 * if(logger.isInfoEnabled()){ logger.info("Handling ESA<"+esaName+">..."); }
-		 */
 		long t1 = System.nanoTime();
 		try {
 			MethodESA esa = getESA(esaName);
-			// ---------------------------------------------
 			Log esaLog = getESALog(esaName);
 			if (esaLog.isDebugEnabled()) {
 				esaLog.debug(
@@ -95,7 +91,6 @@ public class MethodESADispatcher implements ESADispatcher, ApplicationContextAwa
 			ServiceResponse response = esa.perform(request, this.getApplicationContext(),
 					this.getAnnotationArgumentResolvers(), validator);
 			Object m = (response == null ? null : response.getModel());
-			// ------------------------------
 			if (esaLog.isDebugEnabled()) {
 				esaLog.debug(
 						"Handled ESA<" + esaName + ">result=" + (m == null ? "{}" : JSONObject.toJSONString(m)) + ".");
@@ -106,16 +101,10 @@ public class MethodESADispatcher implements ESADispatcher, ApplicationContextAwa
 			}
 			return response;
 		} catch (Throwable e) {
-			// ------------
 			if (logger.isInfoEnabled()) {
 				String message = "#" + (System.nanoTime() - t1) / 1000 / 1000.0 + "ms# Handled ESA<" + esaName
 						+ "> failed";
 				logger.info(message + ",cause:" + e.getMessage());
-				/*
-				 * Throwable logEx=null; if(e instanceof ApplicationControllerException &&
-				 * e.getCause()!=null){ logEx=e.getCause(); }else{ logEx=e; }
-				 * logger.error(logEx.getMessage(),logEx);
-				 */
 			}
 			if (e instanceof RuntimeException) {
 				throw (RuntimeException) e;
