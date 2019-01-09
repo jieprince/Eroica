@@ -3,40 +3,40 @@ package com.sendtomoon.eroica.fling.msg;
 import java.util.List;
 
 public class FlingCommandMsg {
-	
-	public static final String TARGET_TYPE_PAPP="papp";
-	
-	public static final String TARGET_TYPE_SAR="sar";
-	
-	public static final String ACTION_TYPE_SHUTDOWN="shutdown";
-	
-	public static final String ACTION_TYPE_UNEXPORT_ESA="unexportESA";
-	
-	public static final String ACTION_TYPE_STARTUP="startup";
-	
-	public static final String ACTION_TYPE_RESTARTUP="restartup";
-	
-	public static final String ACTION_TYPE_ECHO="echo";
-	
-	//papp/sar
+
+	public static final String TARGET_TYPE_EOAPP = "eoapp";
+
+	public static final String TARGET_TYPE_SAR = "sar";
+
+	public static final String ACTION_TYPE_SHUTDOWN = "shutdown";
+
+	public static final String ACTION_TYPE_UNEXPORT_ESA = "unexportESA";
+
+	public static final String ACTION_TYPE_STARTUP = "startup";
+
+	public static final String ACTION_TYPE_RESTARTUP = "restartup";
+
+	public static final String ACTION_TYPE_ECHO = "echo";
+
+	// eoapp/sar
 	private String targetType;
-	
-	//shutdown/startup/restartup
+
+	// shutdown/startup/restartup
 	private String actionType;
-	
-	//----流水ID
+
+	// ----流水ID
 	private String rid;
-	
+
 	private String projectId;
-	
+
 	private String domainId;
-	
-	private String pappName;
-	
+
+	private String eoappName;
+
 	private String sarName;
-	
+
 	private long timestamp;
-	
+
 	private List<String> limitIps;
 
 	public String getActionType() {
@@ -61,14 +61,6 @@ public class FlingCommandMsg {
 
 	public void setProjectId(String projectId) {
 		this.projectId = projectId;
-	}
-
-	public String getPappName() {
-		return pappName;
-	}
-
-	public void setPappName(String pappName) {
-		this.pappName = pappName;
 	}
 
 	public String getSarName() {
@@ -110,6 +102,13 @@ public class FlingCommandMsg {
 	public void setDomainId(String domainId) {
 		this.domainId = domainId;
 	}
-	
-	
+
+	public String getEoappName() {
+		return eoappName;
+	}
+
+	public void setEoappName(String eoappName) {
+		this.eoappName = eoappName;
+	}
+
 }
