@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<alias name="${sar.transaction.datasource:dataSource}" alias="_sar_transaction_dataSource" />
+  
+  	<bean id="_sar_transaction_proxy_creator" class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" >
+			<property name="advisorBeanNamePrefix" value="_sar_transaction_advisor" />
+			<property name="usePrefix" value="true" />
+			<property name="proxyTargetClass" value="${sar.transaction.proxy.class:true}" /> 
+	</bean>
+	
+    <bean id="_sar_transaction_advisor" class="org.springframework.transaction.interceptor.BeanFactoryTransactionAttributeSourceAdvisor">
+		<property name="adviceBeanName" value="_sar_transaction_interceptor" />
+		<property name="transactionAttributeSource" ref="_sar_transaction_attribute_source" />
+	</bean>
+	
+	<bean id="_sar_transaction_manager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="_sar_transaction_dataSource" />
+	</bean>
+	
+	<bean id="_sar_transaction_interceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager" ref="_sar_transaction_manager" />
+		<property name="transactionAttributeSource" ref="_sar_transaction_attribute_source" />
+	</bean>
+
+	<bean id="_sar_transaction_attribute_source" class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource" />
+  
+</beans>
