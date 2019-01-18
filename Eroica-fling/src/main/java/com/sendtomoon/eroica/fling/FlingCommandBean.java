@@ -40,13 +40,12 @@ public class FlingCommandBean implements FlingCommand, DisposableBean, Initializ
 		if (logger.isInfoEnabled()) {
 			logger.info("Send command=" + cmdString);
 		}
-		if (cmd.getPappName() == null) {
+		if (cmd.getEoappName() == null) {
 			throw new java.lang.IllegalArgumentException("pappName required.");
 		}
-		pizzaManager.set(FlingCommand.PIZZA_GROUP_FLING_NAME + "/" + cmd.getPappName(), cmdString, true);
+		pizzaManager.set(FlingCommand.PIZZA_GROUP_FLING_NAME + "/" + cmd.getEoappName(), cmdString, true);
 		if (commandReceiptEnable && commandReceiptor != null) {
-			// ---------------------------------------------
-			commandsMap.put(rid, new CommandReceiptContext(pizzaManager, this.commandReceiptor, cmd.getPappName(),
+			commandsMap.put(rid, new CommandReceiptContext(pizzaManager, this.commandReceiptor, cmd.getEoappName(),
 					curTimestamp, rid));
 		}
 		return rid;
