@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+	<Appenders>
+		<!-- 控制台Appender -->
+		<!-- 不推荐使用，有并发锁，效率低 -->
+		<Console name="CONSOLE" target="SYSTEM_OUT">
+			<PatternLayout pattern="[%d{HH:mm:ss.SSS}] [%-3p] %x %c{1}: %m%n" />
+		</Console>
+		<!-- pafa.log -->
+		<!-- 日志输出文件 -->
+		<!-- bufferSize指日志bufferBytes，太大，会导致日志输出延时 -->
+		<RollingRandomAccessFile name="logFile"
+			fileName="${sys:eroica.log.home}/pafa.log"
+			filePattern="${sys:eroica.log.home}/pafa-log-$${date:yyyy-MM-dd}/pafa.log.%d{yyyy-MM-dd}.%i"
+			immediateFlush="false" bufferSize="262144">
+			<PatternLayout pattern="[%d{HH:mm:ss.SSS}] [%-3p] %x %c{1}:  %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="2GB" />
+			</Policies>
+			<DefaultRolloverStrategy max="20" />
+		</RollingRandomAccessFile>
+		<Async name="logFileAsync" bufferSize="2000" blocking="false">
+			<AppenderRef ref="logFile" />
+		</Async>
+	</Appenders>
+	<Loggers>
+		<Logger name="com.ibatis" level="ERROR" />
+		<Logger name="java.sql.Connection" level="ERROR" />
+		<Logger name="java.sql.Statement" level="ERROR" />
+		<Logger name="java.sql.PreparedStatement" level="ERROR" />
+		<Logger name="org.apache" level="ERROR" />
+		<Logger name="com.paic.pafa" level="info" />
+		<Logger name="com.pingan.pafa" level="info" />
+		<Logger name="org.springframework" level="info" />
+		<Logger name="org.apache.rocketmq" level="WARN" />
+		<Logger name="RocketmqClient" level="WARN"></Logger>
+		<Root level="info">
+			<AppenderRef ref="logFileAsync" />
+		</Root>
+	</Loggers>
+</Configuration>
