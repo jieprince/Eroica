@@ -4,90 +4,90 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class DruidSqlMessageDTO implements java.io.Serializable {
-	
+
 	private static final long serialVersionUID = -619322255384477628L;
 
 	private String msgId;
-	
+
 	private int identity;
-    
-    private long sqlId;
-    
-    private String druidSql;
-    
-    private long executeCount;
-    
-    private long errorCount;
-    
-    private long totalTime;
-    
-    private Date lastTime;
-    
-    private long maxTimespan;
-    
-    private String lastError;
-    
-    private long effectedRowCount;
-    
-    private long fetchRowCount;
-    
-    private Date maxTimespanOccurTime;
-    
-    private long batchSizeMax;
-    
-    private long batchSizeTotal;
-    
-    private long concurrentMax;
-    
-    private long runningCount;
-    
-    private String druidName;
-    
-    private String druidFile;
-    
-    private String lastErrorMessage;
-    
-    private String lastErrorClass;
-    
-    private String lastErrorStackTrace;
-    
-    private Date lastErrorTime;
-    
-    private String dbType;
-    
-    private long inTransactionCount;
-    
-    private long[] histogram;
-    
-    private String lastSlowParameters;
-    
-    private long resultSetHoldTime;
-    
-    private long executeAndResultSetHoldTime;
-    
-    private long[] fetchRowCountHistogram;
-    
-    private long[] effectedRowCountHistogram;
-    
-    private long[] executeAndResultHoldTimeHistogram;
-    
-    private long effectedRowCountMax;
-    
-    private long fetchRowCountMax;
-    
-    private long clobOpenCount;
-    
-    private long blobOpenCount;
-    
-    private long readStringLength;
-    
-    private long readBytesLength;
-    
-    private long inputStreamOpenCount;
-    
-    private long readerOpenCount;
-    
-    private long sqlHash;
+
+	private long sqlId;
+
+	private String druidSql;
+
+	private long executeCount;
+
+	private long errorCount;
+
+	private long totalTime;
+
+	private Date lastTime;
+
+	private long maxTimespan;
+
+	private String lastError;
+
+	private long effectedRowCount;
+
+	private long fetchRowCount;
+
+	private Date maxTimespanOccurTime;
+
+	private long batchSizeMax;
+
+	private long batchSizeTotal;
+
+	private long concurrentMax;
+
+	private long runningCount;
+
+	private String druidName;
+
+	private String druidFile;
+
+	private String lastErrorMessage;
+
+	private String lastErrorClass;
+
+	private String lastErrorStackTrace;
+
+	private Date lastErrorTime;
+
+	private String dbType;
+
+	private long inTransactionCount;
+
+	private long[] histogram;
+
+	private String lastSlowParameters;
+
+	private long resultSetHoldTime;
+
+	private long executeAndResultSetHoldTime;
+
+	private long[] fetchRowCountHistogram;
+
+	private long[] effectedRowCountHistogram;
+
+	private long[] executeAndResultHoldTimeHistogram;
+
+	private long effectedRowCountMax;
+
+	private long fetchRowCountMax;
+
+	private long clobOpenCount;
+
+	private long blobOpenCount;
+
+	private long readStringLength;
+
+	private long readBytesLength;
+
+	private long inputStreamOpenCount;
+
+	private long readerOpenCount;
+
+	private long sqlHash;
 
 	@Override
 	public String toString() {

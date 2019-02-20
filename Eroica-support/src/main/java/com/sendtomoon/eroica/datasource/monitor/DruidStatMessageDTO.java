@@ -6,148 +6,148 @@ import java.util.Date;
 public class DruidStatMessageDTO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 4162235175776375388L;
-	
+
 	private String msgId;
-	
+
 	private String domainId;
-	
-	private String pappName;
+
+	private String eoappName;
 
 	/** 实例IP */
 	private String instanceIp;
 
 	/** 实例名 */
 	private String instanceName;
-	
-	private int identity;
-	
-	private String druidName;
-	
-    private String dbType;
-    
-    private String driverClassName;
-    
-    private String url;
-    
-    private int waitThreadCount;
-    
-    private long notEmptyWaitCount;
-    
-    private long notEmptyWaitNanos;
-    
-    private int poolingCount;
 
-    private int poolingPeak;
-    
-    private Date poolingPeakTime;
-    
-    private int activeCount;
-    
-    private int activePeak;
-    
-    private Date activePeakTime;
-    
-    private int initialSize;
-    
-    private int minIdle;
-    
-    private int maxActive;
-    
-    private int queryTimeout;
-    
-    private int transactionQueryTimeout;
-    
-    private int loginTimeout;
-    
-    private String validConnectionCheckerClassName;
-    
-    private String exceptionSorterClassName;
-    
-    private boolean testOnBorrow;
-    
-    private boolean testOnReturn;
-    
-    private boolean testWhileIdle;
-    
-    private boolean defaultAutoCommit;
-    
-    private boolean defaultReadOnly;
-    
-    private String defaultTransactionIsolation;
-    
-    private long logicConnectCount;
-    
-    private long logicCloseCount;
-    
-    private long logicConnectErrorCount;
-    
-    private long physicalConnectCount;
-    
-    private long physicalCloseCount;
-    
-    private long physicalConnectErrorCount;
-    
-    private long executeCount;
-    
-    private long errorCount;
-    
-    private long commitCount;
-    
-    private long rollbackCount;
-    
-    private long pSCacheAccessCount;
-    
-    private long pSCacheHitCount;
-    
-    private long pSCacheMissCount;
-    
-    private long startTransactionCount;
-    
-    private long[] transactionHistogram;
-    
-    private long[] connectionHoldTimeHistogram;
-    
-    private boolean removeAbandoned;
-    
-    private long clobOpenCount;
-    
-    private long blobOpenCount;
-    
-    private long keepAliveCheckCount;
-    
-    private boolean keepAlive;
-    
-    private boolean failFast;
-    
-    private long maxWait;
-    
-    private int maxWaitThreadCount;
-    
-    private boolean poolPreparedStatements;
-    
-    private int maxPoolPreparedStatementsPerConnectionSize;
-    
-    private long minEvictableIdleTimeMillis;
-    
-    private long maxEvictableIdleTimeMillis;
-    
-    private boolean logDifferentThread;
-    
-    private long recycleErrorCount;
-    
-    private long preparedStatementOpenCount;
-    
-    private long preparedStatementClosedCount;
-    
-    private boolean useUnfairLock;
-    
-    private boolean initGlobalvariants;
-    
-    private boolean initVariants;
+	private int identity;
+
+	private String druidName;
+
+	private String dbType;
+
+	private String driverClassName;
+
+	private String url;
+
+	private int waitThreadCount;
+
+	private long notEmptyWaitCount;
+
+	private long notEmptyWaitNanos;
+
+	private int poolingCount;
+
+	private int poolingPeak;
+
+	private Date poolingPeakTime;
+
+	private int activeCount;
+
+	private int activePeak;
+
+	private Date activePeakTime;
+
+	private int initialSize;
+
+	private int minIdle;
+
+	private int maxActive;
+
+	private int queryTimeout;
+
+	private int transactionQueryTimeout;
+
+	private int loginTimeout;
+
+	private String validConnectionCheckerClassName;
+
+	private String exceptionSorterClassName;
+
+	private boolean testOnBorrow;
+
+	private boolean testOnReturn;
+
+	private boolean testWhileIdle;
+
+	private boolean defaultAutoCommit;
+
+	private boolean defaultReadOnly;
+
+	private String defaultTransactionIsolation;
+
+	private long logicConnectCount;
+
+	private long logicCloseCount;
+
+	private long logicConnectErrorCount;
+
+	private long physicalConnectCount;
+
+	private long physicalCloseCount;
+
+	private long physicalConnectErrorCount;
+
+	private long executeCount;
+
+	private long errorCount;
+
+	private long commitCount;
+
+	private long rollbackCount;
+
+	private long pSCacheAccessCount;
+
+	private long pSCacheHitCount;
+
+	private long pSCacheMissCount;
+
+	private long startTransactionCount;
+
+	private long[] transactionHistogram;
+
+	private long[] connectionHoldTimeHistogram;
+
+	private boolean removeAbandoned;
+
+	private long clobOpenCount;
+
+	private long blobOpenCount;
+
+	private long keepAliveCheckCount;
+
+	private boolean keepAlive;
+
+	private boolean failFast;
+
+	private long maxWait;
+
+	private int maxWaitThreadCount;
+
+	private boolean poolPreparedStatements;
+
+	private int maxPoolPreparedStatementsPerConnectionSize;
+
+	private long minEvictableIdleTimeMillis;
+
+	private long maxEvictableIdleTimeMillis;
+
+	private boolean logDifferentThread;
+
+	private long recycleErrorCount;
+
+	private long preparedStatementOpenCount;
+
+	private long preparedStatementClosedCount;
+
+	private boolean useUnfairLock;
+
+	private boolean initGlobalvariants;
+
+	private boolean initVariants;
 
 	@Override
 	public String toString() {
-		return "DruidStatMessageDTO [msgId=" + msgId + ", domainId=" + domainId + ", pappName=" + pappName
+		return "DruidStatMessageDTO [msgId=" + msgId + ", domainId=" + domainId + ", eoappName=" + eoappName
 				+ ", instanceIp=" + instanceIp + ", instanceName=" + instanceName + ", identity=" + identity
 				+ ", druidName=" + druidName + ", dbType=" + dbType + ", driverClassName=" + driverClassName + ", url="
 				+ url + ", waitThreadCount=" + waitThreadCount + ", notEmptyWaitCount=" + notEmptyWaitCount
@@ -194,14 +194,6 @@ public class DruidStatMessageDTO implements java.io.Serializable {
 
 	public void setDomainId(String domainId) {
 		this.domainId = domainId;
-	}
-
-	public String getPappName() {
-		return pappName;
-	}
-
-	public void setPappName(String pappName) {
-		this.pappName = pappName;
 	}
 
 	public String getInstanceIp() {
@@ -722,6 +714,14 @@ public class DruidStatMessageDTO implements java.io.Serializable {
 
 	public void setInitVariants(boolean initVariants) {
 		this.initVariants = initVariants;
+	}
+
+	public String getEoappName() {
+		return eoappName;
+	}
+
+	public void setEoappName(String eoappName) {
+		this.eoappName = eoappName;
 	}
 
 }

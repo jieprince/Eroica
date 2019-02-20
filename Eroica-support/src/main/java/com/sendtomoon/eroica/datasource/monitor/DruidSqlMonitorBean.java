@@ -16,7 +16,7 @@ import com.alibaba.druid.stat.DruidDataSourceStatManager;
 import com.alibaba.druid.stat.DruidStatManagerFacade;
 
 public class DruidSqlMonitorBean implements InitializingBean, DisposableBean {
-	
+
 	private static Logger logger = LoggerFactory.getLogger(DruidSqlMonitorBean.class);
 
 	private DruidSqlMessagePublisher publisher;
@@ -56,7 +56,7 @@ public class DruidSqlMonitorBean implements InitializingBean, DisposableBean {
 
 	protected void report() {
 		Set<Object> dataSources = DruidDataSourceStatManager.getInstances().keySet();
-		for(Object dataSource : dataSources) {
+		for (Object dataSource : dataSources) {
 			int identity = System.identityHashCode(dataSource);
 			List<Map<String, Object>> statDataList = DruidStatManagerFacade.getInstance().getSqlStatDataList(identity);
 			for (Map<String, Object> statData : statDataList) {
@@ -64,15 +64,15 @@ public class DruidSqlMonitorBean implements InitializingBean, DisposableBean {
 					DruidSqlMessageDTO msg = map2Msg(statData);
 					msg.setMsgId(MessageUtil.generateMsgId());
 					msg.setIdentity(identity);
-					
+
 					publisher.pushSqlMsg(msg);
-				} catch(Exception e) {
+				} catch (Exception e) {
 					logger.error("Error sending druid sql msg : ", e);
-				}		
+				}
 			}
 		}
 	}
-	
+
 	private DruidSqlMessageDTO map2Msg(Map<String, Object> statData) {
 		DruidSqlMessageDTO msg = new DruidSqlMessageDTO();
 		msg.setSqlId(MessageUtil.getLongValue(statData.get("ID")));
@@ -103,8 +103,9 @@ public class DruidSqlMonitorBean implements InitializingBean, DisposableBean {
 		msg.setResultSetHoldTime(MessageUtil.getLongValue(statData.get("ResultSetHoldTime")));
 		msg.setExecuteAndResultSetHoldTime(MessageUtil.getLongValue(statData.get("ExecuteAndResultSetHoldTime")));
 		msg.setFetchRowCountHistogram(MessageUtil.getLongArrayValue(statData.get("FetchRowCountHistogram")));
-		msg.setEffectedRowCountHistogram(MessageUtil.getLongArrayValue(statData.get("EffectedRowCountHistogram")));		
-		msg.setExecuteAndResultHoldTimeHistogram(MessageUtil.getLongArrayValue(statData.get("ExecuteAndResultHoldTimeHistogram")));
+		msg.setEffectedRowCountHistogram(MessageUtil.getLongArrayValue(statData.get("EffectedRowCountHistogram")));
+		msg.setExecuteAndResultHoldTimeHistogram(
+				MessageUtil.getLongArrayValue(statData.get("ExecuteAndResultHoldTimeHistogram")));
 		msg.setEffectedRowCountMax(MessageUtil.getLongValue(statData.get("EffectedRowCountMax")));
 		msg.setFetchRowCountMax(MessageUtil.getLongValue(statData.get("FetchRowCountMax")));
 		msg.setClobOpenCount(MessageUtil.getLongValue(statData.get("ClobOpenCount")));

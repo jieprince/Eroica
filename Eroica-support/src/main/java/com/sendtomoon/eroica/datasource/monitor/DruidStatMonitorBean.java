@@ -65,7 +65,7 @@ public class DruidStatMonitorBean implements InitializingBean, DisposableBean {
 				DruidStatMessageDTO msg = map2Msg(statData);
 				msg.setMsgId(MessageUtil.generateMsgId());
 				msg.setDomainId(PizzaConstants.getProperty(PizzaConstants.KEY_DOMAIN_ID));
-				msg.setPappName(PizzaConstants.getAppName());
+				msg.setEoappName(PizzaConstants.getAppName());
 				msg.setInstanceIp(PNetUtils.getLocalHost());
 				msg.setInstanceName(InstanceSystemPropertyUtils.getInstanceName());
 
