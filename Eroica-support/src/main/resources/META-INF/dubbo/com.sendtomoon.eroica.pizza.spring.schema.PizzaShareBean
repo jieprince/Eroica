@@ -1,0 +1,3 @@
+datasource=com.sendtomoon.eroica.datasource.DruidDataSourceShareBean
+html=com.sendtomoon.eroica.pizza.support.html.HtmlDeployShareBean
+zip=com.sendtomoon.eroica.pizza.support.html.HtmlDeployShareBean
