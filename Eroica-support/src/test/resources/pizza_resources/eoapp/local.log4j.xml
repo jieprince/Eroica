@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+	<Appenders>
+		<Console name="CONSOLE" target="SYSTEM_OUT">
+			<PatternLayout pattern="[%d{HH:mm:ss.SSS}] [%-3p] %x  %c{1}:  %m%n" />
+		</Console>
+		<RollingRandomAccessFile name="logFile"
+			fileName="${sys:eroica.log.home}/pafa.log" 
+			filePattern="${sys:eroica.log.home}/pafa-log-$${date:yyyy-MM-dd}/pafa.log.%d{yyyy-MM-dd}.%i.txt"
+			 immediateFlush="true" bufferSize="262144"  >
+			<PatternLayout pattern="[%d{HH:mm:ss.SSS}] [%-3p] %x %c{1}:  %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy/> 
+				<SizeBasedTriggeringPolicy size="2GB"/> 
+			</Policies>
+			<DefaultRolloverStrategy max="20"/>  
+		</RollingRandomAccessFile>
+		<!--<NoSql name="mongodb" > 
+			<MongoDb collectionName="mylogs1" 
+				pizzaPath="/mongodb/pafa5_logadapter.mongo.properties" >
+				<configureURL><![CDATA[mongodb://127.0.0.1:27017?dbname=pafa5admin]]></configureURL>
+			</MongoDb>
+		</NoSql> 
+		<NoSql name="pafa5_log_monitor" expiredTime="2017-04-18 21:47:11" > 
+			<Redis queueName="mylogs1" appName="xxx" queueLimitSize="50000" >
+				<configureURL><![CDATA[redis://127.0.0.1:6379?maxIdle=6&minIdle=3&maxActive=20&timeout=1000]]></configureURL>
+			</Redis>
+		</NoSql>
+		<Async name="Async" bufferSize="1500" blocking="false" errorRef="CONSOLE" >
+			<AppenderRef ref="pafa5_log_monitor"/>
+		</Async>-->
+	</Appenders>
+
+
+	<Loggers>
+		<Root level="info" includeLocation="true">
+			<!-- <AppenderRef ref="Async" /> -->
+			<AppenderRef ref="CONSOLE" />
+			<AppenderRef ref="logFile" />
+		</Root>
+	</Loggers>
+</Configuration>
