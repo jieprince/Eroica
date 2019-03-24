@@ -1,0 +1,4 @@
+local=com.sendtomoon.eroica.pizza.impl.LocalPizzaManagerFactory
+classpath=com.sendtomoon.eroica.pizza.impl.ClassPathPizzaManagerFactory
+file=com.sendtomoon.eroica.pizza.impl.LocalPizzaManagerFactory
+zookeeper=com.sendtomoon.eroica.pizza.impl.ZookeeperPizzaManagerFactory
